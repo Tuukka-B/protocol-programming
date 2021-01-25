@@ -1,0 +1,20 @@
+﻿*************************************** SPEC UPGRADE SHEET ***************************************
+
+One might notice that this program is not entirely the same as the one depicted in M2296_assignment04.pdf. The reason for this is that during doing this program, it was evident a few things had to change. These were the things which prompted the changes in design:
+
+* The design document did not account for the number of bytes to be send in each transmission. This becomes a problem for a few reasons. The first is that if we send 2 packets in succession, the server needs to be able to distinguish what is contained in the first packet and what should be in the second. Therefore GFTP now uses uniform packet-size packed and unpacked by struct (sha_struct -module). With this improvement we can send and receive packets without confusion.
+	
+* The pgp keys were stated to be sent over the network. However this is unsafe, as traffic can be captured. Now the protocol uses the checksum (sha-256) for user verification which makes the protocol a little bit safer and the operations faster (no need to write to a file and do a comparison check as checksum tells everything)
+
+* The order of operations are changed. The commands are sent as packed data which can be unpacked by "sha_struct" -module which uses struct. The first thing the client sends is always at least the desired operation and the authentication data. The desired operation by the client is now represented by two letter-combination ("li" for LIST, "dl" for DOWNLOAD and "ul" for UPLOAD). This is done to make the commands more uniform, and, when they are packed with sha_struct, they will always take the same amount of space (4 bytes per letter with the struct module)
+
+* For the LIST operation, the size of the file is omitted. This is done for simplicity.
+
+
+* for the DOWNLOAD operation, the client sends a packet with the name of the file it wants to download after authentication. Then the server sends a packet with the filename it is about to send, its checksum and its filesize and finally, the file. The specification did not comment on all of this and this is how its done by the current specs. 
+
+For the sake of uniformity, the server will send and the client will receive the file in byte increments specified by self.__len (default is 1024 bytes). This can be changed to whatever one wishes by changing the variable. The comparison is done by comparing checksums, not by comparing file sizes as per the specs. Error handling is done as per the specs, with some more errors added for usability.
+
+* for the UPLOAD operation, the client does basically the same thing the server does with the download, except the client omits sending the "filename only"-packet. Naturally the server does the same thing as the client does with the download (the roles are just reversed); the protocol is uniform in this way. So the client sends the name of the file it wants to upload, its checksum and its filesize; all this after authentication (the server requires private pgp keys hash for this operation). 
+
+The only difference with the upload operation is that the client must send the server a closing packet to get server to end the connection. This is done to prevent unexpected connection terminations by the client -side of the protocol. It is good practice to always let the server terminate the connection and it cannot do so if its stuck in a loop receiving the file.

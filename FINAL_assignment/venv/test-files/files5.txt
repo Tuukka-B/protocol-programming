@@ -1,0 +1,20 @@
+total 68K
+drwxrwxr-x 2 4,0K marra 19 16:27 bin
+-rw-r--r-- 1    0 marra 23 21:14 cut
+-rw-r--r-- 1    0 marra 23 21:28 files.txt
+-rw-rw-r-- 1 8,4K marra 23 21:26 GFTP.py
+drwxrwxr-x 2 4,0K marra 19 16:27 include
+drwxrwxr-x 3 4,0K marra 19 16:27 lib
+lrwxrwxrwx 1    3 marra 19 16:27 lib64 -> lib
+-rw-rw-r-- 1    0 marra 22 15:59 M2296_assignment05_client.py
+-rw-rw-r-- 1 2,9K marra 23 18:54 M2296_assignment05_server.py
+-rwxrwxrwx 1 2,4K marra 19 16:59 M2296_public_key.asc
+drwxrwxr-x 2 4,0K marra 22 21:25 noob
+drwxrwxr-x 2 4,0K marra 23 20:10 __pycache__
+-rw-rw-r-- 1   87 marra 19 16:27 pyvenv.cfg
+-rw-r--r-- 1 1,3K marra 22 13:26 server.crt
+-rwxrwxrwx 1 1,1K marra 22 13:08 server.csr
+-rwxrwxrwx 1 1,8K marra 22 13:03 server.key
+-rw-r--r-- 1 3,1K marra 22 13:27 server.pem
+drwxrwxr-x 2 4,0K marra 19 19:13 test
+drwxrwxr-x 2 4,0K marra 22 21:25 testi
